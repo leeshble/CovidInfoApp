@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity
         userPositionText = (TextView)findViewById(R.id.user_position_text);
         setting_btn = (ImageView)findViewById(R.id.setting_btn);
         path_btn = (LinearLayout) findViewById(R.id.path_button);
-
         gpsTracker = new GpsTracker(MainActivity.this);
         userPositionText.setText(setTitleGps());
 
@@ -76,6 +75,18 @@ public class MainActivity extends AppCompatActivity
                 settingView = (View)View.inflate(MainActivity.this, R.layout.setting,null);
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                 dlg.setView(settingView);
+                dlg.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(),"확인",Toast.LENGTH_SHORT).show();
+                    }
+                });
+                dlg.setNeutralButton("취소", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getApplicationContext(),"취소됐습니다",Toast.LENGTH_SHORT).show();
+                    }
+                });
                 dlg.show();
             }
         });
@@ -92,7 +103,6 @@ public class MainActivity extends AppCompatActivity
     public String setTitleGps() {
         latitude = gpsTracker.getLatitude();
         longitude = gpsTracker.getLongitude();
-
         address = getCurrentAddress(latitude, longitude);
         String[] split_address = address.split(" ");
         String refine_address = split_address[2] + " " + split_address[3];

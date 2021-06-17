@@ -1,43 +1,56 @@
 package com.corona.coronaapp;
+
 import android.app.Activity;
-import android.os.Bundle;
+import android.app.Dialog;
+import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.Toast;
+import android.widget.TextView;
+
 public class setting extends Activity
 {
-    RadioButton gps, choose_local;
-    RadioGroup choice;
-    EditText sub2_edit;
-    protected void onCreate(Bundle savedInstanceState)
+    private Context context;
+    public setting(Context context)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.setting);
-        choice = (RadioGroup)findViewById(R.id.choice);
-        gps = (RadioButton)findViewById(R.id.gps);
-        choose_local = (RadioButton)findViewById(R.id.choose_local);
-        sub2_edit = (EditText)findViewById(R.id.sub2_edit);
-        sub2_edit.setVisibility(View.INVISIBLE);
-        choice.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View arg0){
-                switch(choice.getCheckedRadioButtonId()){
-                    case R.id.gps:
-                        // 현재위치 클릭시
-                        sub2_edit.setVisibility(View.INVISIBLE);
-                        Toast toast = Toast.makeText(setting.this, "토스트 연습",Toast.LENGTH_SHORT); //토스트 생성
-                        toast.show();
-                        break;
-                    case R.id.choose_local:
-                        // 위치찾기 클릭시
-                        sub2_edit.setVisibility(View.VISIBLE);
-                        break;
-                    default:
-                        Toast toast2 = Toast.makeText(setting.this, "뭐든 클릭해라",Toast.LENGTH_SHORT); //토스트 생성
-                        toast2.show();
-                }
-            }
-        });
+        this.context = context;
+    }
+    public void callDialog() {
+        final Dialog connection_dialog = new Dialog(context);   //다이얼로그 초기화
+        connection_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);    //타이틀 제거
+        connection_dialog.setContentView(R.layout.setting);   // xml 레이아웃 파일과 연결
+        connection_dialog.show();   //다이얼로그 보이기
+        connection_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT)); // 투명 배경
+
+        final TextView title_text = (TextView) connection_dialog.findViewById(R.id.title_text);
+        final EditText port_edit = (EditText) connection_dialog.findViewById(R.id.sub2_edit);
+        final TextView cancel_btn = (TextView) connection_dialog.findViewById(R.id.cancel_btn);
+        final TextView confirm_btn = (TextView) connection_dialog.findViewById(R.id.confirm_btn);
+        final TextView error_text = (TextView) connection_dialog.findViewById(R.id.error_dialog_txt);
+
+//        //커스텀 다이얼로그 내부 표시 설정
+//        title_text.setText("Setting");
+//        port_edit.setHint("xxxx");
+//        port_edit.setInputType(2);
+//        cancel_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                connection_dialog.dismiss();
+//            }
+//        });
+//        confirm_btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (port_edit.getText().toString().equals("")) {
+//                    error_text.setVisibility(View.VISIBLE);
+//                } else {
+//                    connection_dialog.dismiss();
+//                }
+//            }
+//        });
     }
 }
+

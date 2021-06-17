@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity
 
     View settingView;
     ImageView setting_btn;
-    LinearLayout path_btn;
+    LinearLayout path_btn, item_more_btn1, item_more_btn2;
     TextView userPositionText;
 
 
@@ -58,6 +59,8 @@ public class MainActivity extends AppCompatActivity
         userPositionText = (TextView)findViewById(R.id.user_position_text);
         setting_btn = (ImageView)findViewById(R.id.setting_btn);
         path_btn = (LinearLayout) findViewById(R.id.path_button);
+        item_more_btn1 = (LinearLayout) findViewById(R.id.item_more_btn1);
+        item_more_btn2 = (LinearLayout) findViewById(R.id.item_more_btn2);
 
         gpsTracker = new GpsTracker(MainActivity.this);
         userPositionText.setText(setTitleGps());
@@ -88,6 +91,23 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }
         });
+
+        item_more_btn1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://ncov.mohw.go.kr/socdisBoardView.do?brdId=6&brdGubun=1"));
+                startActivity(intent);
+            }
+        });
+
+        item_more_btn2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://ncov.mohw.go.kr/tcmBoardList.do?brdId=3&brdGubun="));
+                startActivity(intent);
+            }
+        });
+
     }
 
     public String setTitleGps() {

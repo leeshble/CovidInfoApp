@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -38,9 +39,12 @@ public class MainActivity extends AppCompatActivity
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    double latitude, longitude;
+    String address;
 
     View settingView;
     ImageView setting_btn;
+    LinearLayout path_btn;
     TextView userPositionText;
 
 
@@ -49,22 +53,20 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setting_btn = (ImageView)findViewById(R.id.setting_btn);
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         userPositionText = (TextView)findViewById(R.id.user_position_text);
+        setting_btn = (ImageView)findViewById(R.id.setting_btn);
+        path_btn = (LinearLayout) findViewById(R.id.path_button);
+
+        gpsTracker = new GpsTracker(MainActivity.this);
+        userPositionText.setText(setTitleGps());
+
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                gpsTracker = new GpsTracker(MainActivity.this);
-                double latitude = gpsTracker.getLatitude();
-                double longitude = gpsTracker.getLongitude();
-
-                String address = getCurrentAddress(latitude, longitude);
-                String[] split_address = address.split(" ");
-                String refine_address = split_address[2] + " " + split_address[3];
-                userPositionText.setText(refine_address);
+                userPositionText.setText(setTitleGps());
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
@@ -76,11 +78,26 @@ public class MainActivity extends AppCompatActivity
                 AlertDialog.Builder dlg = new AlertDialog.Builder(MainActivity.this);
                 dlg.setView(settingView);
                 dlg.show();
-
-
-
             }
         });
+
+        path_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RouteActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    public String setTitleGps() {
+        latitude = gpsTracker.getLatitude();
+        longitude = gpsTracker.getLongitude();
+
+        address = getCurrentAddress(latitude, longitude);
+        String[] split_address = address.split(" ");
+        String refine_address = split_address[2] + " " + split_address[3];
+        return refine_address;
     }
 
     /*

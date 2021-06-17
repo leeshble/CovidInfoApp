@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     double latitude, longitude;
     String address;
-
     View settingView;
     ImageView setting_btn;
     LinearLayout path_btn;

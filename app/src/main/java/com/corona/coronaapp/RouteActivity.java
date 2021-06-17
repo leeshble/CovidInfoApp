@@ -1,5 +1,6 @@
 package com.corona.coronaapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -9,7 +10,8 @@ import android.widget.ImageView;
 
 public class RouteActivity extends AppCompatActivity {
 
-    ImageView back_btn;
+    ImageView back_btn,add_btn;
+    View addrouteView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +19,7 @@ public class RouteActivity extends AppCompatActivity {
         setContentView(R.layout.activity_route);
 
         back_btn = (ImageView)findViewById(R.id.back_btn);
+        add_btn = (ImageView)findViewById(R.id.add_btn);
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -31,5 +34,16 @@ public class RouteActivity extends AppCompatActivity {
                 route_swipe_refresh.setRefreshing(false);
             }
         });
+
+        add_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addrouteView = (View)View.inflate(RouteActivity.this, R.layout.add_route,null);
+                AlertDialog.Builder dlg = new AlertDialog.Builder(RouteActivity.this);
+                dlg.setView(addrouteView);
+                dlg.show();
+            }
+        });
+
     }
 }

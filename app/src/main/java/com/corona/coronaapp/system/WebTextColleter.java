@@ -90,26 +90,4 @@ public class WebTextColleter{
             }
         }.start();
     }
-
-    public void pressInfoFirst() {
-        String[] press_info = new String[5];
-        new Thread() {
-            @Override
-            public void run() {
-                dbHelper = new DBHelper(context);
-                sqLiteDatabase = dbHelper.getWritableDatabase();
-                Document document = null;
-                try {
-                    document = Jsoup.connect("http://ncov.mohw.go.kr/tcmBoardList.do?brdId=3&brdGubun=").get();
-                    for (int i = 0; i < 5; i++) {
-                        press_info[i] = document.getElementsByClass("bl_link").get(i).text();
-                        sqLiteDatabase.execSQL("INSERT INTO News(News_Info, News_URL) VALUES ('" + press_info[i] + "', '" +"1"+ "')");
-                        Log.d("TAG", "PressInfo: "+press_info[i]);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
 }

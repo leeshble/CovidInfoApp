@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,10 @@ public class ListViewAdapter extends BaseAdapter {
     String[]cityIdList = {"서울", "부산", "대구", "인천", "광주",
             "대전", "울산", "세종", "경기", "강원", "충북",
             "충남", "전북", "전남", "경북", "경남", "제주"};
+
+    String[]cityResultList = {"2", "1.5", "2", "2", "1.5",
+            "1.5", "1.5", "2", "2", "1.5", "1.5",
+            "1.5", "1.5", "1", "1.5", "1.5", "2"};
 
     DBHelper dbHelper;
     SQLiteDatabase sqLiteDatabase = null;
@@ -78,27 +83,9 @@ public class ListViewAdapter extends BaseAdapter {
         itemPosition.setText(cityIdList[listData.getPosition()]);
 
         WebTextColleter webTextColleter = new WebTextColleter(context);
-        Handler handler = new Handler(){
-            @Override
-            public void handleMessage(@NonNull Message msg) {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        Document document = null;
-                        String local_stage = "";
-                        ListViewAdapter listViewAdapter = new ListViewAdapter();
-                        try {
-                            document = Jsoup.connect("http://ncov.mohw.go.kr/regSocdisBoardView.do?brdId=6&brdGubun=68&ncvContSeq=495").get();
-                            local_stage = document.getElementsByAttributeValue("data-city", "step_map_city" + (listData.getPosition() + 1)).get(1).text();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        itemStage.setText(local_stage);
-                    }
 
-                }.start();
-            }
-        };
+        itemStage.setText(cityResultList[listData.getPosition()]);
+
         return view;
     }
 

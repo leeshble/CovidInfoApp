@@ -2,6 +2,7 @@ package com.corona.coronaapp.dialog;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
@@ -15,9 +16,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.corona.coronaapp.R;
+import com.corona.coronaapp.system.DBHelper;
 
 public class AddRouteDialog {
 
+    DBHelper dbHelper;
+    SQLiteDatabase sqLiteDatabase = null;
     private Context context;
     private int city_select;
 
@@ -31,6 +35,9 @@ public class AddRouteDialog {
         add_route_dialog.setContentView(R.layout.dialog_custom);
         add_route_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         add_route_dialog.show();
+
+        dbHelper = new DBHelper(context);
+        sqLiteDatabase = dbHelper.getWritableDatabase();
 
         TextView title_text = (TextView)add_route_dialog.findViewById(R.id.title_text);
         TextView route_title_text = (TextView)add_route_dialog.findViewById(R.id.sub1_text);
@@ -83,6 +90,7 @@ public class AddRouteDialog {
                     error_text.setText("경로 이름을 입력해 주세요");
                     error_text.setVisibility(View.VISIBLE);
                 } else {
+                    sqLiteDatabase.execSQL("INSERT INTO list(title, position) VALUES ('"+ route_title_edit.getText().toString() +"', "+ city_select + ")");
                     Log.d("Setting", String.valueOf(city_select));
                     add_route_dialog.dismiss();
                 }

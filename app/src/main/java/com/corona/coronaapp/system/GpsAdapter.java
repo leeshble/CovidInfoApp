@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
@@ -25,13 +26,48 @@ import java.util.Locale;
 public class GpsAdapter extends AppCompatActivity {
 
     Context context;
+    GpsTracker gpsTracker;
+    DBHelper dbHelper;
+    SQLiteDatabase sqLiteDatabase = null;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    double latitude, longitude;
+    String address;
+    private String city = "";
+    String[]cityIdList = {"서울", "부산", "대구", "인천", "광주",
+            "대전", "울산", "세종", "경기", "강원", "충북",
+            "충남", "전북", "전남", "경북", "경남", "제주"};
 
 
     public GpsAdapter(Context context) {
         this.context = context;
+        gpsTracker = new GpsTracker(context);
+        dbHelper = new DBHelper(context);
+    }
+
+    //상단 위치 지정
+    public String setTitleGps() {
+        sqLiteDatabase = dbHelper.getWritableDatabase();
+        latitude = gpsTracker.getLatitude();
+        longitude = gpsTracker.getLongitude();
+
+        address = getCurrentAddress(latitude, longitude);
+        if (address.equals(null)) {
+            address = "- 주소 미발견";
+        }
+        String[] split_address = address.split(" ");
+        String[] split_city = split_address[1].split("");
+        city = split_city[0] + split_city[1];
+        for (int i = 0; i < cityIdList.length; i++) {
+            if (cityIdList[i].equals(city)) {
+                sqLiteDatabase.execSQL("UPDATE Setting SET Local_ID = '" + i + "' WHERE Setting_ID = 1");
+                break;
+            }
+        }
+        Log.d("TAG", city);
+        String refine_address = split_address[2] + " " + split_address[3];
+        return refine_address;
     }
 
     /*
@@ -75,7 +111,7 @@ public class GpsAdapter extends AppCompatActivity {
         super.onRequestPermissionsResult(permsRequestCode, permissions, grandResults);
     }
 
-    void checkRunTimePermission(){
+    public void checkRunTimePermission(){
         //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(context,
@@ -177,7 +213,7 @@ public class GpsAdapter extends AppCompatActivity {
     }
 
     public boolean checkLocationServicesStatus() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) context.getSystemService(LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }

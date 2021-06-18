@@ -24,7 +24,7 @@ public class WebTextColleter{
     public void webTextColleting(String city) {
         new Thread() {
             public void run() {
-                Log.d("RUN", local_stage(find_city(city)));
+                Log.d("RUN", localStage(find_city(city)));
             }
         }.start();
     }
@@ -41,16 +41,39 @@ public class WebTextColleter{
         return cityId;
     }
 
-    private String local_stage(String cityId) {
+    private String localStage(String cityId) {
         Document document = null;
-        String local_info = "";
+        String local_stage = "";
         try {
             document = Jsoup.connect("http://ncov.mohw.go.kr/regSocdisBoardView.do?brdId=6&brdGubun=68&ncvContSeq=495").get();
 
-            local_info = document.getElementsByAttributeValue("data-city", cityId).first().text();
+            local_stage = document.getElementsByAttributeValue("data-city", cityId).first().text();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return local_info;
+        return local_stage;
+    }
+    
+    public String[] pressInfo() {
+
+        String[] press_info = new String[5];
+        
+        new Thread() {
+            @Override
+            public void run() {
+                Document document = null;
+                try {
+                    document = Jsoup.connect("http://ncov.mohw.go.kr/tcmBoardList.do?brdId=3&brdGubun=").get();
+                    for (int i = 0; i < 5; i++) {
+                        press_info[i] = document.getElementsByClass("bl_link").get(i).text();
+                        Log.d("TAG", "PressInfo: "+press_info[i]);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }.start();
+        return press_info;
     }
 }

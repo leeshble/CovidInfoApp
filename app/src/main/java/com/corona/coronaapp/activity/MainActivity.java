@@ -41,10 +41,13 @@ public class MainActivity extends AppCompatActivity
     String[] REQUIRED_PERMISSIONS  = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     double latitude, longitude;
     String address;
+    WebTextColleter webTextColleter;
+
     View settingView;
     ImageView setting_btn;
     LinearLayout path_btn, item_more_btn1, item_more_btn2;
     TextView userPositionText;
+    TextView press_text1, press_text2, press_text3, press_text4, press_text5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,15 +62,26 @@ public class MainActivity extends AppCompatActivity
         item_more_btn1 = (LinearLayout) findViewById(R.id.item_more_btn1);
         item_more_btn2 = (LinearLayout) findViewById(R.id.item_more_btn2);
 
+        press_text1 = (TextView)findViewById(R.id.press_text1);
+        press_text2 = (TextView)findViewById(R.id.press_text2);
+        press_text3 = (TextView)findViewById(R.id.press_text3);
+        press_text4 = (TextView)findViewById(R.id.press_text4);
+        press_text5 = (TextView)findViewById(R.id.press_text5);
+
+        //GPS로 위치 설정
         gpsTracker = new GpsTracker(MainActivity.this);
         userPositionText.setText(setTitleGps());
+        
+        webTextColleter = new WebTextColleter(MainActivity.this);
 
-
+        //지침 정보 업데이트
+        setPressText();
+        
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                WebTextColleter webTextColleter = new WebTextColleter(MainActivity.this);
                 webTextColleter.webTextColleting(city);
+                webTextColleter.pressInfo();
                 userPositionText.setText(setTitleGps());
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -107,6 +121,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
+    //상단 위치 지정
     public String setTitleGps() {
         latitude = gpsTracker.getLatitude();
         longitude = gpsTracker.getLongitude();
@@ -118,6 +133,17 @@ public class MainActivity extends AppCompatActivity
         Log.d(city, city);
         String refine_address = split_address[2] + " " + split_address[3];
         return refine_address;
+    }
+
+    //보도자료 업데이트
+    public void setPressText() {
+        String[] press_text = webTextColleter.pressInfo();
+
+        press_text1.setText(press_text[0]);
+        press_text1.setText(press_text[1]);
+        press_text1.setText(press_text[2]);
+        press_text1.setText(press_text[3]);
+        press_text1.setText(press_text[4]);
     }
 
     /*

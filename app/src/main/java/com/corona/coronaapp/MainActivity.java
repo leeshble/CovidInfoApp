@@ -36,6 +36,7 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity
 {
+    private String city = "";
     private GpsTracker gpsTracker;
     private static final int GPS_ENABLE_REQUEST_CODE = 2001;
     private static final int PERMISSIONS_REQUEST_CODE = 100;
@@ -46,7 +47,6 @@ public class MainActivity extends AppCompatActivity
     ImageView setting_btn;
     LinearLayout path_btn, item_more_btn1, item_more_btn2;
     TextView userPositionText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                WebTextColleter webTextColleter = new WebTextColleter(MainActivity.this);
+                webTextColleter.webTextColleting(city);
                 userPositionText.setText(setTitleGps());
                 swipeRefreshLayout.setRefreshing(false);
             }
@@ -127,6 +129,9 @@ public class MainActivity extends AppCompatActivity
 
         address = getCurrentAddress(latitude, longitude);
         String[] split_address = address.split(" ");
+        String[] split_city = split_address[1].split("");
+        city = split_city[0] + split_city[1];
+        Log.d(city, city);
         String refine_address = split_address[2] + " " + split_address[3];
         return refine_address;
     }
@@ -181,16 +186,13 @@ public class MainActivity extends AppCompatActivity
         }
         super.onRequestPermissionsResult(permsRequestCode, permissions, grandResults);
     }
-
     void checkRunTimePermission(){
-
         //런타임 퍼미션 처리
         // 1. 위치 퍼미션을 가지고 있는지 체크합니다.
         int hasFineLocationPermission = ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
         int hasCoarseLocationPermission = ContextCompat.checkSelfPermission(MainActivity.this,
                 Manifest.permission.ACCESS_COARSE_LOCATION);
-
 
         if (hasFineLocationPermission == PackageManager.PERMISSION_GRANTED &&
                 hasCoarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
@@ -221,9 +223,7 @@ public class MainActivity extends AppCompatActivity
                 ActivityCompat.requestPermissions(MainActivity.this, REQUIRED_PERMISSIONS,
                         PERMISSIONS_REQUEST_CODE);
             }
-
         }
-
     }
 
 
@@ -250,17 +250,12 @@ public class MainActivity extends AppCompatActivity
 
         }
 
-
-
         if (addresses == null || addresses.size() == 0) {
             Toast.makeText(this, "주소 미발견", Toast.LENGTH_LONG).show();
             return "주소 미발견";
-
         }
-
         Address address = addresses.get(0);
         return address.getAddressLine(0).toString()+"\n";
-
     }
 
 
@@ -306,7 +301,6 @@ public class MainActivity extends AppCompatActivity
                         return;
                     }
                 }
-
                 break;
         }
     }
@@ -317,6 +311,4 @@ public class MainActivity extends AppCompatActivity
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
-
-
 }

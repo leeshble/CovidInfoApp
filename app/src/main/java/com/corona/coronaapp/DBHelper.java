@@ -17,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String qry = "CREATE TABLE list(id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, purpose TEXT)";
+        String qry = "CREATE TABLE Destination(Path_ID INTEGER PRIMARY KEY AUTOINCREMENT, Location_ID INTEGER NOT NULL, CoronaInfo_ID INTEGER NOT NULL)";
         sqLiteDatabase.execSQL(qry);
     }
 

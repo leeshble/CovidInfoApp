@@ -17,8 +17,14 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String qry = "CREATE TABLE Destination(Path_ID INTEGER PRIMARY KEY AUTOINCREMENT, Location_ID INTEGER NOT NULL, CoronaInfo_ID INTEGER NOT NULL)";
-        sqLiteDatabase.execSQL(qry);
+        String qry1 = "CREATE TABLE Destination ( Destination_ID INTEGER NOT NULL, Destination_name CHAR(500) NOT NULL PRIMARY KEY, Local_ID INTEGER NOT NULL)";
+        String qry2 = "CREATE TABLE Current_Info(Local_ID INTEGER NOT NULL PRIMARY KEY, Grade CHAR(500) NOT NULL)";
+        String qry3 = "CREATE TABLE Guideline(Grade CHAR(10) NOT NULL PRIMARY KEY, Guideline CHAR(1000)";
+        String qry4 = "CREATE TABLE News(News_ID INTEGER NOT NULL PRIMARY KEY, News_Info CHAR(500) NOT NULL, News_URL CHAR(500) NOT NULL)";
+        String qry5 = "CREATE TABLE Setting(Setting_Location INTEGER NOT NULL, Local_ID INTEGER NOT NULL, Setting_ID INTEGER NOT NULL PRIMARY KEY)";
+
+        /////
+        sqLiteDatabase.execSQL(qry1);
     }
 
     @Override

@@ -1,9 +1,11 @@
-package com.corona.coronaapp;
+package com.corona.coronaapp.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.widget.RemoteViews;
+
+import com.corona.coronaapp.R;
 
 /**
  * Implementation of App Widget functionality.

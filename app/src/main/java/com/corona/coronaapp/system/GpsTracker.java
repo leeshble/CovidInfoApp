@@ -1,4 +1,4 @@
-package com.corona.coronaapp;
+package com.corona.coronaapp.system;
 
 import android.Manifest;
 import android.app.Service;

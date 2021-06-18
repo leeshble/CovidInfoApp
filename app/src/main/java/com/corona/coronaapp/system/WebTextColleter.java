@@ -1,4 +1,4 @@
-package com.corona.coronaapp;
+package com.corona.coronaapp.system;
 
 import android.content.Context;
 import android.util.Log;
@@ -53,7 +53,4 @@ public class WebTextColleter{
         }
         return local_info;
     }
-
-
-
 }

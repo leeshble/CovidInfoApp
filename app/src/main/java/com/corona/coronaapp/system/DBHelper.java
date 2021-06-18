@@ -1,4 +1,4 @@
-package com.corona.coronaapp;
+package com.corona.coronaapp.system;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

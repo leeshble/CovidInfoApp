@@ -199,7 +199,7 @@ public class MainActivity extends AppCompatActivity
         String stage = level_text.getText().toString();
 
         cursor = sqLiteDatabase.rawQuery("SELECT GuideText FROM Guideline", null);
-        String[] guide_text = new String[5];
+        String[] guide_text = new String[6];
         for (int i = 0; i < 5; i++) {
             cursor.moveToNext();
             guide_text[i] = cursor.getString(0);
@@ -208,15 +208,15 @@ public class MainActivity extends AppCompatActivity
 
         int state = 0;
         if (stage.equals("1")) {
-            state = 0;
-        } else if (stage.equals("2")) {
             state = 1;
-        } else if (stage.equals("3")) {
+        } else if (stage.equals("2")) {
             state = 2;
-        } else if (stage.equals("4")) {
+        } else if (stage.equals("3")) {
             state = 3;
-        } else if (stage.equals("5")) {
+        } else if (stage.equals("4")) {
             state = 4;
+        } else if (stage.equals("5")) {
+            state = 5;
         }
         return guide_text[state];
     }

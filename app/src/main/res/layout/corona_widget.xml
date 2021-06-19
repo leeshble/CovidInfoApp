@@ -23,6 +23,7 @@
             android:padding="10dp">
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/widget_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -35,10 +36,10 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="85dp"
             android:background="@drawable/round_bg"
-            android:backgroundTint="@color/light_gray"
+            android:backgroundTint="#FF7925"
             android:gravity="center"
             android:orientation="horizontal"
             android:layout_margin="10dp"
@@ -54,6 +55,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="2"
+                android:textColor="@color/black"
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
@@ -61,6 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="단계"
+                android:textColor="@color/black"
                 android:textSize="30dp"
                 android:textStyle="bold" />
 
@@ -120,18 +123,40 @@
         <LinearLayout
             android:id="@+id/item_list_layout1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/widget_guide_text"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="□ 중점관리시설: 유흥시설 5종 집합금지, 이외 시설은 21시 이후 운영 중단 등 제한 강화, 위반시 원스트라이크아웃제"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="□  일반관리시설: 이용인원 제한 강화, 위험도 높은 활동 금지"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="□ 국공립시설 : 경륜,경마 등 중단, 이외시설 30% 인원 제한"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="□ 모임,행사: 100인이상 금지"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="스포츠관람: 관중 입장(10%)"/>
+
 
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

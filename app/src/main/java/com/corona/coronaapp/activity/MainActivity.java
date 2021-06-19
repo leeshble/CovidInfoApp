@@ -9,10 +9,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity
     String address;
     WebTextColleter webTextColleter;
     GpsAdapter gpsAdapter;
+    ImageView help_btn;
 
     View settingView;
     ImageView setting_btn;
@@ -72,7 +75,6 @@ public class MainActivity extends AppCompatActivity
 
         dbHelper = new DBHelper(MainActivity.this);
         sqLiteDatabase = dbHelper.getWritableDatabase();
-
         gpsAdapter = new GpsAdapter(MainActivity.this);
 
         if (!gpsAdapter.checkLocationServicesStatus()) {
@@ -80,18 +82,14 @@ public class MainActivity extends AppCompatActivity
         }else {
             gpsAdapter.checkRunTimePermission();
         }
-
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_layout);
         userPositionText = (TextView)findViewById(R.id.user_position_text);
         setting_btn = (ImageView)findViewById(R.id.setting_btn);
         path_btn = (LinearLayout) findViewById(R.id.path_button);
         item_more_btn1 = (LinearLayout) findViewById(R.id.item_more_btn1);
         item_more_btn2 = (LinearLayout) findViewById(R.id.item_more_btn2);
-
         level_text = (TextView)findViewById(R.id.level_text);
-
         guide_text1 = (TextView)findViewById(R.id.guide_text1);
-
         press_text1 = (TextView)findViewById(R.id.press_text1);
         press_text2 = (TextView)findViewById(R.id.press_text2);
         press_text3 = (TextView)findViewById(R.id.press_text3);
@@ -102,9 +100,7 @@ public class MainActivity extends AppCompatActivity
         //GPS로 위치 설정
         gpsTracker = new GpsTracker(MainActivity.this);
         userPositionText.setText(setTitleGps());
-        
         webTextColleter = new WebTextColleter(MainActivity.this);
-
         webTextColleter.webTextColleting(city);
         webTextColleter.pressInfo();
 
@@ -155,6 +151,17 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://ncov.mohw.go.kr/tcmBoardList.do?brdId=3&brdGubun="));
                 startActivity(intent);
+            }
+        });
+
+        help_btn = (ImageView)findViewById(R.id.help_btn);
+        help_btn.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                Intent intenthome = new Intent(getApplicationContext(),helper.class);
+                startActivity(intenthome);
             }
         });
 
@@ -238,4 +245,6 @@ public class MainActivity extends AppCompatActivity
         press_text5.setText(press_text[4]);
 
     }
+
+
 }

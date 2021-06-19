@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_margin="20dp">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txthelper"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="40dp"
+            android:text="도움말"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text=" 위젯 설정 방법"
+            android:textStyle="bold"/>
+        <TextView
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text=" 1. 홈 화면에서 빈 공간을 길게 터치합니다.\n
+2. 코로나 위젯을 탭합니다.\n 3. 위젯을 길게 터치하면 홈 화면의 이미지가 표시됩니다.
+\n 4. 위젯을 원하는 위치로 슬라이드한 다음 손가락을 뗍니다.\n * 도움말: 일부 앱은 위젯과 함께 제공됩니다. 앱을 길게 터치한 다음 코로나위젯을 탭합니다"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text=" 위젯 크기 조정 방법"
+            android:textStyle="bold"/>
+        <TextView
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text=" 1. 홈 화면에서 위젯을 길게 터치합니다.\n
+2. 손가락을 뗍니다. 위젯의 크기를 조정할 수 있는 경우 측면 윤곽선이 점선으로 표시됩니다.\n
+3. 위젯 크기를 조정하려면 점을 드래그합니다.\n
+4. 완료되면 위젯 바깥쪽을 탭합니다.\n"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:text="즐겨찾는 경로 설정 방법"
+            android:textStyle="bold"/>
+        <TextView
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15dp"
+            android:text="1. 화면의 '경로별단계'상자를 클릭합니다.\n2. 경로이름 및 위치를 설정합니다.\n3. 경로별 단계에 대한 정보가 상자로 생성됩니다."
+            android:textStyle="bold"/>
+
+        <Button
+            android:layout_marginTop="40dp"
+            android:id="@+id/btnhome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="메인화면으로 돌아가기"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+</ScrollView>
